@@ -8,10 +8,10 @@ module.exports = {
   mode: "development",
   context: path.join(basePath, "src"),
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".ts", ".tsx"],
   },
   entry: {
-    app: "./index.jsx",
+    app: "./index.tsx",
     appStyles: ["./styles.scss"],
   },
   output: {
@@ -21,7 +21,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx$/,
+        test: /\.tsx$/,
         exclude: /node_modules/,
         loader: "babel-loader",
       },
@@ -54,9 +54,11 @@ module.exports = {
       },
     ],
   },
+  devtool: "eval-source-map",
   devServer: {
     port: 8080,
   },
+  stats: "errors-only",
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
