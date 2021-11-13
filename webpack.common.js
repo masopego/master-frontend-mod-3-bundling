@@ -1,7 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const basePath = __dirname;
 
 module.exports = {
@@ -15,7 +14,6 @@ module.exports = {
     appStyles: ["./styles.scss"],
   },
   output: {
-    filename: "[name].[chunkhash].js",
     path: path.resolve(process.cwd(), "dist"),
   },
   module: {
@@ -24,25 +22,6 @@ module.exports = {
         test: /\.tsx$/,
         exclude: /node_modules/,
         loader: "babel-loader",
-      },
-      {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          {
-            loader: "sass-loader",
-            options: {
-              implementation: require("sass"),
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.(png|jpg)$/,
@@ -54,11 +33,6 @@ module.exports = {
       },
     ],
   },
-  devtool: "eval-source-map",
-  devServer: {
-    port: 8080,
-  },
-  stats: "errors-only",
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
@@ -66,9 +40,5 @@ module.exports = {
       scriptLoading: "blocking",
     }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css",
-    }),
   ],
 };
