@@ -8,8 +8,10 @@
     "type-check": "tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "start:dev": "webpack serve --config webpack.dev.js",
+    "start:prod": "webpack serve --config webpack.prod.js",
     "build:dev": "npm run type-check && webpack --config webpack.dev.js",
-    "build:prod": "npm run type-check && webpack --config webpack.prod.js"
+    "build:prod": "npm run type-check && webpack --config webpack.prod.js",
+    "build:perf": "npm run type-check && webpack --config webpack.perf.js"
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
     "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.5.1",
+    "dotenv-webpack": "^7.0.3",
     "html-loader": "^3.0.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.4",
@@ -42,6 +45,7 @@
     "style-loader": "^3.3.1",
     "typescript": "^4.4.4",
     "webpack": "^5.64.0",
+    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.4.0",
     "webpack-merge": "^5.8.0"

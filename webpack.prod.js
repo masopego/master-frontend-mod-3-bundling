@@ -2,6 +2,7 @@ const { merge } = require("webpack-merge");
 const common = require("./webpack.common.js");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = merge(common, {
   mode: "production",
@@ -9,6 +10,24 @@ module.exports = merge(common, {
   output: {
     filename: "js/[name].[chunkhash].js",
     assetModuleFilename: "images/[hash][ext][query]",
+  },
+  optimization: {
+    runtimeChunk: "single",
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: "all",
+          name: (module) => {
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+            )[1];
+            return `vendor/${packageName.replace("@", "")}`;
+          },
+          test: /[\\/]node_modules[\\/]/,
+          enforce: true,
+        },
+      },
+    },
   },
   module: {
     rules: [
@@ -24,7 +43,6 @@ module.exports = merge(common, {
                 exportLocalsConvention: "camelCase",
                 localIdentName: "[path][name]__[local]--[hash:base64:5]",
                 localIdentContext: path.resolve(__dirname, "src"),
-                localIdentHashPrefix: "my-custom-hash",
               },
             },
           },
@@ -46,6 +64,9 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       filename: "css/[name].[chunkhash].css",
       chunkFilename: "[id].[chunkhash].css",
+    }),
+    new Dotenv({
+      path: "./prod.env",
     }),
   ],
 });
