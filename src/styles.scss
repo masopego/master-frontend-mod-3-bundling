@@ -1,7 +1,9 @@
-$blue-color: teal;
+$green-color: rgb(178, 218, 190);
 
-.red-background {
-  background-color: $blue-color;
+h1 {
+  font-size: 40px;
+  color: $green-color;
+  font-weight: bold;
 }
 
 img {
